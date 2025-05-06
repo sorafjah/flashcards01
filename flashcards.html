@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flashcards</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script>
+const{useState}=React;
+const cards=[{front:'犬',back:'dog'},{front:'猫',back:'cat'},{front:'鳥',back:'bird'}];
+function App(){
+  const[index,setIndex]=useState(0);
+  const[showBack,setShowBack]=useState(false);
+  const current=cards[index];
+  const flip=()=>setShowBack(v=>!v);
+  const next=()=>{setIndex(i=>(i+1)%cards.length);setShowBack(false);};
+  return React.createElement('div',{className:'flex flex-col items-center gap-6 w-full max-w-md'},
+    React.createElement('div',{className:'w-full aspect-video bg-white rounded-2xl shadow-lg flex items-center justify-center text-3xl font-bold select-none'},showBack?current.back:current.front),
+    React.createElement('div',{className:'flex gap-4'},
+      React.createElement('button',{onClick:flip,className:'px-6 py-3 rounded-xl shadow text-white bg-green-500 text-lg font-semibold active:scale-95'},'裏面'),
+      React.createElement('button',{onClick:next,className:'px-6 py-3 rounded-xl shadow text-white bg-blue-500 text-lg font-semibold active:scale-95'},'次へ')
+    )
+  );
+}
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+</script>
+</body>
+</html>
